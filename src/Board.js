@@ -79,12 +79,32 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      var counter = 0;
+      for (var i = 0; i < this.attributes[rowIndex].length; i++) {
+        var currentValue = this.attributes[rowIndex][i];
+        if (currentValue === 1) {
+          counter++;
+        }
+      }
+
+      if (counter >= 2) {
+        return true;
+      }
+
+      return false;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      //iterate over the matrix
+      for (var i = 0; i < this.attributes.n; i++) {
+        //if the current array has a conflict
+        if(this.hasRowConflictAt(i) === true) {
+          return true;
+        }
+      }
+
+      return false;
     },
 
 
@@ -94,11 +114,36 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+    //create a variable to count the number of pieces in the column
+      var counter = 0;
+    //for each element (row) in the array (outer array)
+      for (var i = 0; i < this.attributes.n; i++) {
+        //if the current row at colIndex is 1
+        if (this.attributes[i][colIndex] === 1) {
+          //add 1 to the count variable
+          counter++;
+        }
+      }
+
+      if (counter >= 2) {
+      //return true
+        return true;
+      }
+    //return false
+      return false;
+
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      //iterate over each column
+      for (var i = 0; i < this.attributes.n; i++) {
+      //call hasColConflictAt(currentArray[currentColIndex]
+        if (this.hasColConflictAt(i) === true) {
+          return true;
+        }
+      }
+
       return false; // fixme
     },
 
@@ -109,11 +154,53 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      //create a counter variable
+      var counter = 0;
+      //create a startColumn variable that equals majorDiagonalColumnIndexAtFirstRow
+      var startColumn = majorDiagonalColumnIndexAtFirstRow;
+
+      //iterate over every row in the matrix
+      // ! Changed 'i = 0' to be 'i = startColumn'
+      for (var i = startColumn; i < this.attributes.n; i++){
+        //if the current row at startColumn is 1
+        if (this.attributes[i][startColumn] === 1) {
+          //add 1 to counter
+          counter++;
+        }
+        //add 1 to startColumn
+        startColumn++;
+      }
+
+      //if counter >= 2
+      if (counter >= 2) {
+        //return true
+        return true;
+      }
+
       return false; // fixme
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      //iterate over each element in the first row
+      for (var i = 0; i < this.attributes[0].length; i++) {
+        //if hasMajorDiagonalConflictAt(currentElement) is true
+        if (this.hasMajorDiagonalConflictAt(i)) {
+          //return true
+          return true;
+        }
+      }
+
+      // iterate over the rest of the first column
+      for (var j = 1; j < this.attributes.n; j++) {
+        // ! Something needs to change with how we're calling 'hasMajorDiagonalConflictAt' here. I followed it with the debugger, and the argument we're passing in just evaluates to 1, plus we're iterating over the whole matrix since we called it on 'this'. So we are actually iterating over a part of the matrix that we've already done. We need to figure out how to only bring in the targeted rows.
+        //if hasMajorDiagonalConflictAt(currentElement) is true
+        if (this.hasMajorDiagonalConflictAt(this.attributes[j][0])) {
+          //return true
+          return true;
+        }
+      }
+
       return false; // fixme
     },
 
@@ -124,11 +211,26 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
+      //create a counter variable
+      //create a startColumn variable that equals majorDiagonalColumnIndexAtFirstRow
+
+      //iterate over every row in the matrix starting at startColumn
+        //if the current row at an index of startColumn is 1
+          //add 1 to counter
+        //subtract 1 to startColumn
+
+      //if counter >= 2
+        //return true
+      //
       return false; // fixme
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
+      //iterate over the first row of the matric
+        //if hasMinorDiagonalConflictAt(currentIndex) === true
+          //return true
+
       return false; // fixme
     }
 
